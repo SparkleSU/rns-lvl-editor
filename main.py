@@ -168,8 +168,10 @@ class LevelEditor(QMainWindow):
         self.save()
         QApplication.exit()
 
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = LevelEditor()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
