@@ -53,6 +53,12 @@ class LevelEditor(QMainWindow):
         }
 
     def click_act_1(self):
+        """
+        Метод для создания и изменения событий на первой дорожке.
+        :param LevelEditor self: Изменяется self.chart_data текущей дорожки
+        :return: None
+        """
+
         self.pause_sound()
         current_position = self.player.position()
         for i in range(len(self.chart_data["track1"])):
@@ -64,6 +70,12 @@ class LevelEditor(QMainWindow):
         self.ui.r1Action.setText(self.directions[self.chart_data["track1"][len(self.chart_data["track1"]) - 1]["dir"]])
 
     def click_act_2(self):
+        """
+        Метод для создания и изменения событий на второй дорожке.
+        :param LevelEditor self: Изменяется self.chart_data текущей дорожки
+        :return: None
+        """
+
         self.pause_sound()
         current_position = self.player.position()
         for i in range(len(self.chart_data["track2"])):
@@ -75,6 +87,12 @@ class LevelEditor(QMainWindow):
         self.ui.r2Action.setText(self.directions[self.chart_data["track2"][len(self.chart_data["track2"]) - 1]["dir"]])
     
     def click_act_3(self):
+        """
+        Метод для создания и изменения событий на дорожке акселерометра.
+        :param LevelEditor self: Изменяется self.chart_data текущей дорожки
+        :return: None
+        """
+
         self.pause_sound()
         current_position = self.player.position()
         for i in range(len(self.chart_data["trackAcc"])):
@@ -86,6 +104,11 @@ class LevelEditor(QMainWindow):
         self.ui.r3Action.setText(self.directions[self.chart_data["trackAcc"][len(self.chart_data["trackAcc"]) - 1]["dir"]])
         
     def select(self):
+        """
+        Метод для выбора аудиофайла.
+        :return: None
+        """
+
         file_path, _ = QFileDialog.getOpenFileName(self, "Select wav file", "", "WAV files (*.wav)")
         if file_path:
             self.ui.labelMain.setText("Now you are making level!")
@@ -95,6 +118,11 @@ class LevelEditor(QMainWindow):
             self.player.stop()
 
     def play_sound(self):
+        """
+        Метод для продолжения/начала воспроизведения.
+        :return: None
+        """
+
         self.ui.r1Action.setText("")
         self.ui.r2Action.setText("")
         self.ui.r3Action.setText("")
@@ -105,14 +133,23 @@ class LevelEditor(QMainWindow):
         self.ui.playButton.setEnabled(False)
         self.ui.pauseButton.setEnabled(True)
         
-
     def pause_sound(self):
+        """
+        Метод для приостановки воспроизведения.
+        :return: None
+        """
+
         self.player.pause()
         self.timer.stop()
         self.ui.playButton.setEnabled(True)
         self.ui.pauseButton.setEnabled(False)
 
     def reset_sound(self):
+        """
+        Метод для перехода к началу аудиофайла.
+        :return: None
+        """
+
         self.ui.r1Action.setText("")
         self.ui.r2Action.setText("")
         self.ui.r3Action.setText("")
@@ -124,29 +161,61 @@ class LevelEditor(QMainWindow):
         self.ui.playButton.setEnabled(True)
         self.ui.pauseButton.setEnabled(False)
 
-    def seek(self, position):
+    def seek(self, position: int):
+        """
+        Метод для перехода к началу аудиофайла.
+        :param int positon: Новая позиция воспроизведения в миллисекундах
+        :return: None
+        """
+
         self.player.setPosition(position)
 
     def update_position(self):
+        """
+        Метод для перехода к началу аудиофайла.
+        :return: None
+        """
+
         current_position = self.player.position()
         self.ui.currentTime.setText(self.format_time(current_position))
         self.ui.playMain.setValue(current_position)
 
-    def update_volume(self, value):
-        self.audio_output.setVolume(value / 100.0)  # scale value to 0.0-1.0 range
+    def update_volume(self, value: int):
+        """
+        Метод для синхронизации слайдера звука и аудиоплеера.
+        :param int value: Значение, полученное из слайдера звука
+        :return: None
+        """
 
-    def format_time(self, millis) -> str:
+        self.audio_output.setVolume(value / 100.0)  # Масштабируем value в диапазон 0.0-1.0 
+
+    def format_time(self, millis: int) -> str:
+        """
+        Метод для форматирования переданного времени в требуемое для вывода.
+        :param int millis: Время в миллисекундах
+        :return: Строка в требуемом формате
+        """
+
         seconds = millis // 1000
         minutes = seconds // 60
         millis -= seconds * 1000
         return f"{minutes % 60:02}:{seconds % 60:02}.{millis:03}"
     
     def get_seconds(self, millis) -> float:
-        seconds = millis // 1000
-        millis -= seconds * 1000
-        return float(f"{seconds % 60:02}.{millis:03}")
+        """
+        Метод для форматирования переданного времени в требуемое для вывода.
+        :param int millis: Время в миллисекундах
+        :return: Время в секундах
+        """
+
+        return millis / 1000
 
     def save(self):
+        """
+        Метод для сохранения разметки.
+        :return: None
+        """
+
         author, ok_author = QInputDialog.getText(self, "Input Author Name", "Enter the author's name:")
         if not ok_author or not author.strip():
             return
@@ -165,6 +234,11 @@ class LevelEditor(QMainWindow):
                 json.dump(obj=self.chart_data, fp=file)
 
     def close_app(self):
+        """
+        Метод для закрытия приложения.
+        :return: None
+        """
+
         self.save()
         QApplication.exit()
 
