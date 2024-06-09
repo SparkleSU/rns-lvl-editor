@@ -33,7 +33,7 @@
    ```bash
    $ pip install -r requirements.txt
    ```
-5. Запустите приложение
+5. Запустите main.py
 
 ## Интерфейс пользователя
 
