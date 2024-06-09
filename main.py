@@ -163,7 +163,7 @@ class LevelEditor(QMainWindow):
 
     def seek(self, position: int):
         """
-        Метод для перехода к началу аудиофайла.
+        Метод для перемещения по аудиофайлу на указанную позицию.
         :param int positon: Новая позиция воспроизведения в миллисекундах
         :return: None
         """
@@ -172,7 +172,7 @@ class LevelEditor(QMainWindow):
 
     def update_position(self):
         """
-        Метод для перехода к началу аудиофайла.
+        Метод для обновления текущей позиции воспроизведения аудиофайла.
         :return: None
         """
 
@@ -193,7 +193,7 @@ class LevelEditor(QMainWindow):
         """
         Метод для форматирования переданного времени в требуемое для вывода.
         :param int millis: Время в миллисекундах
-        :return: Строка в требуемом формате
+        :return str: Строка в требуемом формате
         """
 
         seconds = millis // 1000
@@ -203,9 +203,9 @@ class LevelEditor(QMainWindow):
     
     def get_seconds(self, millis) -> float:
         """
-        Метод для форматирования переданного времени в требуемое для вывода.
+        Метод для перехода от миллисекунд к секундам.
         :param int millis: Время в миллисекундах
-        :return: Время в секундах
+        :return float: Время в секундах
         """
 
         return millis / 1000
